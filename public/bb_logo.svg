@@ -1,0 +1,11 @@
+<svg width="150" height="150" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <!-- Background Circle -->
+  <circle cx="100" cy="100" r="90" fill="#4CAF50" stroke="#388E3C" stroke-width="10"/>
+  
+  <!-- Wallet Icon -->
+  <rect x="50" y="70" width="100" height="60" rx="10" fill="#FFFFFF" stroke="#388E3C" stroke-width="8"/>
+  <circle cx="130" cy="100" r="8" fill="#388E3C"/>
+  
+  <!-- Rupee Symbol -->
+  <text x="85" y="120" font-family="Arial" font-size="50" fill="#388E3C" font-weight="bold">₹</text>
+</svg>
