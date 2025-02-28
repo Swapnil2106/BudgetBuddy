@@ -1,9 +1,7 @@
 <app-header-component></app-header-component>
-<app-balance-component></app-balance-component>
-<app-transaction-component></app-transaction-component>
-<app-add-new-transaction-component></app-add-new-transaction-component>
+<router-outlet></router-outlet>
 <div class="container-fluid fixedBtn">
-  <button class="btn btn-success">
+  <button class="btn btn-success" routerLink="addNew" >
     <i class="fa-solid fa-square-plus mx-2"></i>
     <span>New Transaction</span>
   </button>
