@@ -1,46 +1,56 @@
 <div class="container">
+
   <div>
     <div class="row">
       <div class="col-md-5 text-center">
-        <button class="btn btn-sm btn-light">Expense</button>
+        <button class="btn btn-sm btn-light" id="expense" value="expense" (click)="toggleType(true)">Expense</button>
       </div>
       <div class="col-md-2 text-center">|</div>
       <div class="col-md-5 text-center">
-        <button class="btn btn-sm btn-light">Income</button>
+        <button class="btn btn-sm btn-light" id="income" value="!expense" (click)="toggleType(false)">Income</button>
       </div>
     </div>
   </div>
 
-    <h4 class="text-center">Add new Expense transaction</h4>
-    <div>
-      <form>
-        <div class="mb-3">
-          <label for="amount" class="form-label">Amount</label>
-          <input type="number" class="form-control" id="amount" placeholder="Amount">
-        </div>
-        <div class="mb-3">
-          <label for="category" class="form-label">Category</label>
-          <select class="form-select" aria-label="Default select example">
-            <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="category" class="form-label">Payment Method</label>
-          <select class="form-select" aria-label="Default select example">
-            <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="amount" class="form-label">Date</label>
-          <input type="date" class="form-control" id="date">
-        </div>
-      </form>
-    </div>
+  <h4 class="text-center" *ngIf="isExpense">Add new Expense transaction</h4>
+  <h4 class="text-center" *ngIf="!isExpense">Add new Income transaction</h4>
+
+  <div>
+    <form [formGroup]="formValue" (ngSubmit)="addTransaction()">
+
+      <div class="form-group mb-2">
+        <label for="amount" class="form-label">Amount</label>
+        <input type="number" class="form-control" id="amount" formControlName="amount" placeholder="Amount">
+      </div>
+
+      <div class="form-group mb-2">
+        <label for="category" class="form-label">Category</label>
+        <select class="form-select" id="category" formControlName="category">
+          <option value="" disabled selected>Select a category</option>
+          <option *ngFor="let category of categories" [value]="category">
+            {{ category }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group mb-2">
+        <label for="paymentMethod" class="form-label">Payment Method</label>
+        <select class="form-select" id="paymentMethod" formControlName="paymentMethod">
+          <option value="" disabled selected>Select a Payment Method</option>
+          <option *ngFor="let paymentMethod of paymentMethodTypes" [value]="paymentMethod">
+            {{ paymentMethod }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group mb-2">
+        <label for="date" class="form-label">Date</label>
+        <input type="date" class="form-control" id="date" formControlName="date">
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="formValue.invalid">Submit</button>
+
+    </form>
+  </div>
 
 </div>

@@ -11,7 +11,6 @@
   <table class="table table-hover text-center">
     <thead>
       <tr>
-        <th scope="col">#</th>
         <th scope="col">Date</th>
         <th scope="col">Category</th>
         <th scope="col">Amount</th>
@@ -20,34 +19,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>21-feb-2025</td>
-        <td>Travel</td>
-        <td>800</td>
-        <td>Cash</td>
-        <td>
-          <button class="btn btn-sm btn-warning mx-1">Update</button>
-          <button class="btn btn-sm btn-danger mx-1">Delete</button>
-        </td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>23-feb-2025</td>
-        <td>Snacks</td>
-        <td>150</td>
-        <td>UPI</td>
-        <td>
-          <button class="btn btn-sm btn-warning mx-1">Update</button>
-          <button class="btn btn-sm btn-danger mx-1">Delete</button>
-        </td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>26-feb-2025</td>
-        <td>Grocery</td>
-        <td>300</td>
-        <td>UPI</td>
+      <tr *ngFor="let transaction of transactionItems">
+        <td>{{ transaction.date | date:'dd-MMM-yyyy' }}</td>
+        <td>{{ transaction.category }}</td>
+        <td>{{ transaction.amount }}</td>
+        <td>{{ transaction.paymentMethod }}</td>
         <td>
           <button class="btn btn-sm btn-warning mx-1">Update</button>
           <button class="btn btn-sm btn-danger mx-1">Delete</button>
