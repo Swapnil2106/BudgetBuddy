@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { CommonServiceService } from '../../shared/common-service.service';
 import { TransactionModel } from '../transaction-component/transaction.model';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 
@@ -14,17 +14,14 @@ import { Router } from '@angular/router';
 })
 export class AddNewTransactionComponentComponent implements OnInit {
 
-  constructor(private commonService: CommonServiceService, private formBuilder: FormBuilder, private router: Router){
-    this.formValue = this.formBuilder.group({
-      type:[''],
-      amount: [''],
-      category: [''],
-      paymentMethod: [''],
-      date: ['']
-    });
+  constructor(private commonService: CommonServiceService,
+              private formBuilder: FormBuilder,
+              private router: Router){
     }
 
   ngOnInit(): void {
+    this.setMaxDate();
+    this.initializeForm();
     this.paymentMethodTypes = this.commonService.paymentMethodTypes;
     this.categories = this.commonService.expenseCategories;
   }
@@ -34,6 +31,22 @@ export class AddNewTransactionComponentComponent implements OnInit {
   paymentMethodTypes: string[] = [];
   transactionItem: TransactionModel = new TransactionModel();
   formValue !: FormGroup;
+  maxDate: string = '';
+
+  setMaxDate() {
+    const today = new Date();
+    this.maxDate = today.toISOString().split('T')[0]; // Format YYYY-MM-DD
+  }
+
+  initializeForm() {
+    this.formValue = this.formBuilder.group({
+      amount: ['', [Validators.required, Validators.min(1)]],
+      category: ['', Validators.required],
+      paymentMethod: ['', Validators.required],
+      date: ['', [Validators.required]],
+    });
+  }
+
 
   toggleType(value: boolean){
     if(value){

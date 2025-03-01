@@ -25,11 +25,58 @@
         <td>{{ transaction.amount }}</td>
         <td>{{ transaction.paymentMethod }}</td>
         <td>
-          <button class="btn btn-sm btn-warning mx-1">Update</button>
-          <button class="btn btn-sm btn-danger mx-1">Delete</button>
+          <button type="button" class="btn btn-sm btn-warning mx-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="editTransaction(transaction)">
+            Update
+          </button>
+          <button type="button" class="btn btn-sm btn-danger mx-1" (click)="deleteTransaction(transaction)">Delete</button>
         </td>
       </tr>
     </tbody>
   </table>
 
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Update Transaction</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup] = "formValue">
+          <div class="form-group mb-2">
+            <label for="amount" class="form-label">Amount</label>
+            <input type="number" class="form-control" id="amount" formControlName="amount" placeholder="Amount">
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="category" class="form-label">Category</label>
+            <select class="form-select" id="category" formControlName="category">
+              <option value="" disabled selected>Select a category</option>
+              <option *ngFor="let category of categories" [value]="category">
+                {{ category }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="paymentMethod" class="form-label">Payment Method</label>
+            <select class="form-select" id="paymentMethod" formControlName="paymentMethod">
+              <option value="" disabled selected>Select a Payment Method</option>
+              <option *ngFor="let paymentMethod of paymentMethodTypes" [value]="paymentMethod">
+                {{ paymentMethod }}
+              </option>
+            </select>
+          </div>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-warning btn-sm" (click)="updateTransactionDetails()" data-bs-dismiss="modal">Understood</button>
+      </div>
+    </div>
+  </div>
 </div>

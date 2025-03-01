@@ -45,7 +45,7 @@
 
       <div class="form-group mb-2">
         <label for="date" class="form-label">Date</label>
-        <input type="date" class="form-control" id="date" formControlName="date">
+        <input type="date" class="form-control" id="date" formControlName="date" [max]="maxDate"/>
       </div>
 
       <button type="submit" class="btn btn-primary" [disabled]="formValue.invalid">Submit</button>

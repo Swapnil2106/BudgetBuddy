@@ -1,1 +1,22 @@
-<p>report-component works!</p>
+<div>
+  <div>
+    <div class="row">
+      <div class="col-md-5 text-center">
+        <button class="btn btn-sm btn-light" id="expense" (click)="processTransactionData('expense')">Expense</button>
+      </div>
+      <div class="col-md-2 text-center">|</div>
+      <div class="col-md-5 text-center">
+        <button class="btn btn-sm btn-light" id="income"(click)="processTransactionData('income')">Income</button>
+      </div>
+    </div>
+  </div>
+
+  <div >
+    <h3>Transactions by Category</h3>
+    <div class="pieChart">
+      <canvas id="categoryPieChart"></canvas>
+    </div>
+
+  </div>
+
+</div>
