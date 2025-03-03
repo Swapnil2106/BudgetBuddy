@@ -1,1 +1,87 @@
-<p>budget-component works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <p>Set budgets to track your expenses</p>
+    </div>
+    <div class="col-md-6">
+      <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="addBudget()">
+        Add new budget
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row" *ngFor="let budget of budgetItems">
+    <div class="col-md-12">
+      <div class="card shadow-sm p-3">
+        <div class="d-flex justify-content-between align-items-center">
+          <span class="col-md-3">{{ budget.name }}</span>
+          <strong class="col-md-2">Budget amount: <span>{{ budget.amount }}</span></strong>
+          <strong class="col-md-3">Budget for: <span>{{ budget.category }}</span></strong>
+          <span class=" badge bg-success">{{ (totalAmountSpentPerCategory(budget.category)  / budget.amount) * 100 | number: '1.0-0' }}%</span>
+          <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="updateBudget(budget)" >Update</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteBudget(budget)">Delete</button>
+        </div>
+        <div class="progress mt-2">
+          <div class="progress-bar" role="progressbar"
+               [style.width.%]="(totalAmountSpentPerCategory(budget.category)  / budget.amount) * 100"
+               [ngClass]="{'bg-danger': (totalAmountSpentPerCategory(budget.category)  / budget.amount) > 75, 'bg-warning': (totalAmountSpentPerCategory(budget.category)  / budget.amount) > 50}">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel" *ngIf="showAdd">Add New Budget</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel" *ngIf="showUpdate">Update Budget</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup] = "formValue">
+
+          <div class="form-group mb-2">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" formControlName="name" placeholder="Budget Name">
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="amount" class="form-label">Amount</label>
+            <input type="number" class="form-control" id="amount" formControlName="amount" placeholder="Amount">
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="category" class="form-label">Category</label>
+            <select class="form-select" id="category" formControlName="category">
+              <option value="" disabled selected>Select a category for your Budget</option>
+              <option *ngFor="let category of categories" [value]="category">
+                {{ category }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="startDate" class="form-label">Start Date</label>
+            <input type="date" class="form-control" id="startDate" formControlName="startDate"/>
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="endDate" class="form-label">End Date</label>
+            <input type="date" class="form-control" id="endDate" formControlName="endDate"/>
+          </div>
+
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success btn-sm" *ngIf="showAdd" data-bs-dismiss="modal" (click)="addBudgetDetails()">Add</button>
+        <button type="button" class="btn btn-warning btn-sm" *ngIf="showUpdate" data-bs-dismiss="modal" (click)="updateBudgetDetails()">Update</button>
+      </div>
+    </div>
+  </div>
+</div>

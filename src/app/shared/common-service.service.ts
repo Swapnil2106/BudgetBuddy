@@ -1,3 +1,4 @@
+import { BudgetModel } from '../components/budget-component/budget.model';
 import { TransactionModel } from './../components/transaction-component/transaction.model';
 import { Injectable } from '@angular/core';
 
@@ -14,12 +15,19 @@ export class CommonServiceService {
 
   paymentMethodTypes: string[] = ['In Cash', 'Credit Card', 'Debit Card', 'Net Banking', 'Online UPI'];
 
+  budgetItems: BudgetModel[] = [];
+
   constructor() {
     this.loadTransactions();
+    this.loadBudgets();
   }
 
   saveTransactions() {
     localStorage.setItem('transactions', JSON.stringify(this.transactionItems));
+  }
+
+  saveBudgets() {
+    localStorage.setItem('budgets', JSON.stringify(this.budgetItems));
   }
 
   loadTransactions() {
@@ -29,13 +37,29 @@ export class CommonServiceService {
     }
   }
 
+  loadBudgets() {
+    const savedBudgets = localStorage.getItem('budgets');
+    if (savedBudgets) {
+      this.budgetItems = JSON.parse(savedBudgets);
+    }
+  }
+
   addTransaction(newTransaction: TransactionModel){
     this.transactionItems.push(newTransaction);
     this.saveTransactions();
   }
 
+  addBudget(newBudget: BudgetModel){
+    this.budgetItems.push(newBudget);
+    this.saveBudgets();
+  }
+
   getTransactions(): TransactionModel[]{
     return this.transactionItems;
+  }
+
+  getBudgets(): BudgetModel[]{
+    return this.budgetItems;
   }
 
   getTotalExpense(): number {
@@ -58,11 +82,27 @@ export class CommonServiceService {
     }
   }
 
+  updateBudget(updatedBudget: BudgetModel) {
+    const index = this.budgetItems.findIndex(t => t.id === updatedBudget.id);
+    if (index !== -1) {
+      this.budgetItems[index] = updatedBudget;
+      this.saveBudgets();
+    }
+  }
+
   deleteTransaction(id: number) {
     const index = this.transactionItems.findIndex(transaction => transaction.id === id);
     if (index !== -1) {
       this.transactionItems.splice(index, 1);
       this.saveTransactions();
+    }
+  }
+
+  deleteBudget(id: number) {
+    const index = this.budgetItems.findIndex(budget => budget.id === id);
+    if (index !== -1) {
+      this.budgetItems.splice(index, 1);
+      this.saveBudgets();
     }
   }
 
