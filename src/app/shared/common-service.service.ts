@@ -1,11 +1,14 @@
+import { isPlatformBrowser } from '@angular/common';
 import { BudgetModel } from '../components/budget-component/budget.model';
 import { TransactionModel } from './../components/transaction-component/transaction.model';
 import { Injectable } from '@angular/core';
+import { Inject, PLATFORM_ID } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommonServiceService {
+
 
   transactionItems: TransactionModel[] = [];
 
@@ -17,33 +20,40 @@ export class CommonServiceService {
 
   budgetItems: BudgetModel[] = [];
 
-  constructor() {
+  constructor(@Inject(PLATFORM_ID) private platformId: any) {
     this.loadTransactions();
     this.loadBudgets();
   }
 
   saveTransactions() {
-    localStorage.setItem('transactions', JSON.stringify(this.transactionItems));
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('transactions', JSON.stringify(this.transactionItems));
+    }
   }
 
   saveBudgets() {
-    localStorage.setItem('budgets', JSON.stringify(this.budgetItems));
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('budgets', JSON.stringify(this.budgetItems));
+    }
   }
 
   loadTransactions() {
-    const savedTransactions = localStorage.getItem('transactions');
-    if (savedTransactions) {
-      this.transactionItems = JSON.parse(savedTransactions);
+    if (isPlatformBrowser(this.platformId)) {
+      const savedTransactions = localStorage.getItem('transactions');
+      if (savedTransactions) {
+        this.transactionItems = JSON.parse(savedTransactions);
+      }
     }
   }
 
   loadBudgets() {
-    const savedBudgets = localStorage.getItem('budgets');
-    if (savedBudgets) {
-      this.budgetItems = JSON.parse(savedBudgets);
+    if (isPlatformBrowser(this.platformId)) {
+      const savedBudgets = localStorage.getItem('budgets');
+      if (savedBudgets) {
+        this.budgetItems = JSON.parse(savedBudgets);
+      }
     }
   }
-
   addTransaction(newTransaction: TransactionModel){
     this.transactionItems.push(newTransaction);
     this.saveTransactions();

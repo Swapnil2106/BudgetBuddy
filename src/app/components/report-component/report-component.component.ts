@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { TransactionModel } from '../transaction-component/transaction.model';
 import { CommonServiceService } from '../../shared/common-service.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 
 Chart.register(...registerables);
 @Component({
@@ -21,7 +21,7 @@ export class ReportComponentComponent {
   isExpense: boolean = true;
   categories: string[] = [];
 
-  constructor(private commonService: CommonServiceService) {}
+  constructor(private commonService: CommonServiceService, @Inject(PLATFORM_ID) private platformId: any) {}
 
   ngOnInit() {
     this.transactions = this.commonService.transactionItems;
@@ -63,31 +63,47 @@ export class ReportComponentComponent {
   }
 
   createPieChart() {
-    const categories = Object.keys(this.categoryData);
-    const amounts = Object.values(this.categoryData);
+    if (isPlatformBrowser(this.platformId)) {
+      const categories = Object.keys(this.categoryData);
+      const amounts = Object.values(this.categoryData);
 
-    const ctx = document.getElementById('categoryPieChart') as HTMLCanvasElement;
-    if (this.pieChart) {
-      this.pieChart.destroy();
-    }
-
-    this.pieChart = new Chart(ctx, {
-      type: 'pie',
-      data: {
-        labels: categories,
-        datasets: [{
-          data: amounts,
-          backgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#4bc0c0', '#9966ff', '#ff9f40', '#77b254'],
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top'
-          }
-        }
+      const canvas = document.getElementById('categoryPieChart') as HTMLCanvasElement;
+      if (!canvas) {
+        console.error('Canvas element not found');
+        return;
       }
-    });
+
+      const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        console.error('Unable to get canvas rendering context');
+        return;
+      }
+
+      // Destroy existing chart if it exists
+      if (this.pieChart) {
+        this.pieChart.destroy();
+      }
+
+      this.pieChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: categories,
+          datasets: [
+            {
+              data: amounts,
+              backgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#4bc0c0', '#9966ff', '#ff9f40', '#77b254'],
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+          },
+        },
+      });
+    }
   }
 }
