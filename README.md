@@ -4,7 +4,15 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 
 ## Development server
 
-To start a local development server, run:
+To run this project in your local, first download the zip file and then run:
+
+```bash
+npm install
+```
+
+
+
+Once the project setup is done, to start a local development server, run:
 
 ```bash
 ng serve
@@ -12,47 +20,35 @@ ng serve
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+##Website Look
+## 01: Overview / Home Page
+![Overview](https://github.com/user-attachments/assets/99565581-5c14-41d0-ae14-9622d15c9479)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 02: Add New Transaction Page
+![AddTransaction](https://github.com/user-attachments/assets/c792006c-8767-4878-b1b2-7332005511fd)
 
-```bash
-ng generate component component-name
-```
+## 03: Report Page
+## 03.1: Expense Report Page
+![Report](https://github.com/user-attachments/assets/be146ad2-c1cb-4477-be81-8347d62f5597)
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 03.2: Income Report Page
+![ReportIncome](https://github.com/user-attachments/assets/db478303-3e1a-41af-819d-85631f4a9c9f)
 
-```bash
-ng generate --help
-```
+## 04: Budget Page
+![Budget](https://github.com/user-attachments/assets/5198616c-6389-43ea-8db0-a3c60ae6b18b)
 
-## Building
+## 05: Update Transaction
+![UpdateTransaction](https://github.com/user-attachments/assets/f40245a7-538a-4db2-b0bb-b1a03d902684)
 
-To build the project run:
+## 06: Delete Transaction
+![DeleteTransaction](https://github.com/user-attachments/assets/f0bc01e8-9cda-474f-9ee5-7a2e49587ce9)
 
-```bash
-ng build
-```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
-## Running unit tests
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
 
-```bash
-ng test
-```
 
-## Running end-to-end tests
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
 ## Additional Resources
 
