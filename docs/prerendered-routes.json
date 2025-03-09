@@ -1,0 +1,9 @@
+{
+  "routes": {
+    "/": {},
+    "/addNew": {},
+    "/budget": {},
+    "/home": {},
+    "/report": {}
+  }
+}
