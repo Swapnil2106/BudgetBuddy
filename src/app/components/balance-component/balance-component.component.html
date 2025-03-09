@@ -1,32 +1,33 @@
 <div class="bgBalance">
   <div class="container-fluid text-center bgWallet">
     <i class="fa-solid fa-wallet mx-2"></i>
-    <span>My Wallet</span>
+    <strong><span>My Wallet</span></strong>
   </div>
   <div class="container px-4 text-center">
     <div class="row gx-5 mt-3">
-      <div class="col mb-4">
-        <div class="card cardColor">
+      <div class="col mb-4 mt-3">
+        <div class="card cardColor" style="margin-left: 20%;">
           <div class="card-body">
-            <h5 class="card-title">EXPENSE</h5>
-            <div class="flex mt-4">
-              <i class="fa-solid fa-arrow-down" style="color: #dc0909;"></i>
-              <p>{{expense}}</p>
+            <h4 class="card-title">EXPENSE</h4>
+            <div class="d-flex align-items-center justify-content-center gap-3 mt-4 amountSize">
+              <i class="fa-solid fa-arrow-down" style="color:#A31D1D; background-color:#EC7FA9; padding:10px; border-radius:8px"></i>
+              <p class="mb-0">₹{{ expense }}</p>
             </div>
           </div>
         </div>
       </div>
       <div class="col mb-4">
-        <div class="p-3">TOTAL BALANCE</div>
-        <p>{{totalBalance}}</p>
+        <h3 class="p-3">TOTAL BALANCE</h3>
+        <h1>₹{{totalBalance}}</h1>
+        <hr>
       </div>
-      <div class="col mb-4">
-        <div class="card cardColor">
+      <div class="col mb-4 mt-3">
+        <div class="card cardColor"  style="margin-left: 20%;">
           <div class="card-body">
-            <h5 class="card-title">INCOME</h5>
-            <div class="flex mt-4">
-              <i class="fa-solid fa-arrow-up" style="color: #0da032;"></i>
-              <p>{{income}}</p>
+            <h4 class="card-title">INCOME</h4>
+            <div class="d-flex align-items-center justify-content-center gap-3 mt-4 amountSize">
+              <i class="fa-solid fa-arrow-up text-success" style="color:#1B4D3E; background-color:#B3D8A8; padding:10px; border-radius:8px"></i>
+              <p class="mb-0">₹{{income}}</p>
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { CommonServiceService } from '../../shared/common-service.service';
 import { TransactionModel } from '../transaction-component/transaction.model';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 
@@ -75,7 +75,8 @@ export class AddNewTransactionComponentComponent implements OnInit {
       this.formValue.reset(); // Reset form after submission
       this.router.navigate(['/home']);
     } else {
-      alert('Please fill in all fields correctly.');
+      this.formValue.markAllAsTouched();
+      return;
     }
   }
 }

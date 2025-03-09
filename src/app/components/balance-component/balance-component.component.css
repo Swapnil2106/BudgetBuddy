@@ -1,12 +1,21 @@
 .bgBalance{
- background-color: #A9B5DF;
+ background-color: #EFF3EA;
 }
 
 .bgWallet{
-  background-color: #7886C7;
+  background-color: #F7F7F7;
+  height: 50px;
+  padding-top: 5px;
+  font-size: x-large;
 }
 
 .cardColor{
-  background-color: #2D336B;
+  background-color: #222831;
   color: #FFF2F2;
+  width: 60%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.amountSize{
+  font-size: 25px;;
 }

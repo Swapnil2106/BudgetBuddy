@@ -1,7 +1,7 @@
 <app-header-component [currentRoute]="currentRoute" ></app-header-component>
 <router-outlet></router-outlet>
 <div class="container-fluid fixedBtn">
-  <button *ngIf="currentRoute === '/home' || currentRoute === '/'" class="btn btn-success" routerLink="addNew">
+  <button *ngIf="currentRoute === '/home' || currentRoute === '/'" class="btn btn-dark" routerLink="addNew">
     <i class="fa-solid fa-square-plus mx-2"></i>
     <span>New Transaction</span>
   </button>

@@ -1,4 +1,12 @@
 .pieChart{
-  width: 20%;
+  width: 30%;
   height: 30%;
+  margin-left: 35%;
+}
+
+.typeClass{
+  padding-top: 2%;
+  padding-left: 3%;
+  padding-right: 3%;
+  background-color: #EFF3EA;
 }
