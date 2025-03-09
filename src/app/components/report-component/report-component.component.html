@@ -1,19 +1,29 @@
-<div>
-  <div>
-    <div class="row">
-      <div class="col-md-5 text-center">
-        <button class="btn btn-sm btn-light" id="expense" (click)="processTransactionData('expense')">Expense</button>
+<div style="background-color: #F7F7F7;">
+  <div class="typeClass">
+    <div class="row" style="padding-bottom: 1%;">
+      <div class="col-md-4 text-center">
+        <button class="btn" [ngClass]="{'btn-dark': isExpense, 'btn-light': !isExpense}"
+         id="expense" (click)="processTransactionData('expense')">Expense</button>
       </div>
-      <div class="col-md-2 text-center">|</div>
-      <div class="col-md-5 text-center">
-        <button class="btn btn-sm btn-light" id="income"(click)="processTransactionData('income')">Income</button>
+      <div class="col-md-4 text-center">|</div>
+      <div class="col-md-4 text-center">
+        <button class="btn" [ngClass]="{'btn-dark': !isExpense, 'btn-light': isExpense}"
+        id="income"(click)="processTransactionData('income')">Income</button>
       </div>
     </div>
+    <hr>
   </div>
 
-  <div >
-    <h3>Transactions by Category</h3>
-    <div class="pieChart">
+  <div class="text-center">
+    <div *ngIf="isExpense" class="d-flex align-items-center justify-content-center gap-3">
+      <h3 class="mb-0" style="text-decoration: underline;">Expense</h3>
+      <i class="fa-solid fa-arrow-trend-down fa-2xl" style="color:#A31D1D;"></i>
+    </div>
+    <div *ngIf="!isExpense" class="d-flex align-items-center justify-content-center gap-3">
+      <h3 class="mb-0" style="text-decoration: underline;">Income</h3>
+      <i class="fa-solid fa-arrow-trend-up fa-2xl" style="color:#3A7D44;"></i>
+    </div>
+    <div class="pieChart mt-2">
       <canvas id="categoryPieChart"></canvas>
     </div>
 

@@ -1,3 +1,11 @@
 .textColor{
-  color: #FFF2F2;
+  color: #EEEEEE;
+}
+
+.logostyle{
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  color: #EEEEEE;
+  font-size: xx-large;
 }

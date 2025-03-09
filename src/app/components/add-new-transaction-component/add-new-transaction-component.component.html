@@ -1,56 +1,82 @@
 <div class="container">
 
-  <div>
+  <div class="container typeClass">
     <div class="row">
-      <div class="col-md-5 text-center">
-        <button class="btn btn-sm btn-light" id="expense" value="expense" (click)="toggleType(true)">Expense</button>
+      <div class="col-md-4 text-center">
+        <button class="btn" [ngClass]="{'btn-dark': isExpense, 'btn-light': !isExpense}"
+         id="expense" value="expense" (click)="toggleType(true)">Expense</button>
       </div>
-      <div class="col-md-2 text-center">|</div>
-      <div class="col-md-5 text-center">
-        <button class="btn btn-sm btn-light" id="income" value="!expense" (click)="toggleType(false)">Income</button>
+      <div class="col-md-4 text-center">|</div>
+      <div class="col-md-4 text-center">
+        <button class="btn" [ngClass]="{'btn-dark': !isExpense, 'btn-light': isExpense}"
+         id="income" value="!expense" (click)="toggleType(false)">Income</button>
       </div>
+    </div>
+    <hr>
+  </div>
+
+  <div class="card newBillCard" style="width:40%">
+    <h4 class="text-center mt-3" *ngIf="isExpense">Add new Expense transaction</h4>
+    <h4 class="text-center mt-3" *ngIf="!isExpense">Add new Income transaction</h4>
+
+    <div class="container newBill">
+      <form [formGroup]="formValue" (ngSubmit)="addTransaction()">
+
+        <div class="form-group mt-2 mb-2">
+          <label for="amount" class="form-label">Amount <span class="text-danger">*</span></label>
+          <div class="input-group">
+              <input type="number" class="form-control" id="amount" formControlName="amount" placeholder="Enter your Amount">
+              <div class="input-group-append">
+                  <span class="input-group-text">₹</span>
+              </div>
+          </div>
+          <div *ngIf="formValue.get('amount')?.invalid && formValue.get('amount')?.touched" class="text-danger">
+              <small *ngIf="formValue.get('amount')?.errors?.['required']">Amount is required.</small>
+              <small *ngIf="formValue.get('amount')?.errors?.['min']">Amount must be greater than zero.</small>
+          </div>
+      </div>
+
+        <div class="form-group mb-2">
+          <label for="category" class="form-label">Category <span class="text-danger">*</span></label>
+          <select class="form-select" id="category" formControlName="category">
+            <option value="" disabled selected>Select a category</option>
+            <option *ngFor="let category of categories" [value]="category">
+              {{ category }}
+            </option>
+          </select>
+          <div *ngIf="formValue.get('category')?.invalid && formValue.get('category')?.touched" class="text-danger">
+            <small *ngIf="formValue.get('category')?.errors?.['required']">Category is required.</small>
+          </div>
+        </div>
+
+        <div class="form-group mb-2">
+          <label for="paymentMethod" class="form-label">Payment Method <span class="text-danger">*</span></label>
+          <select class="form-select" id="paymentMethod" formControlName="paymentMethod">
+            <option value="" disabled selected>Select a Payment Method</option>
+            <option *ngFor="let paymentMethod of paymentMethodTypes" [value]="paymentMethod">
+              {{ paymentMethod }}
+            </option>
+          </select>
+          <div *ngIf="formValue.get('paymentMethod')?.invalid && formValue.get('paymentMethod')?.touched" class="text-danger">
+            <small *ngIf="formValue.get('paymentMethod')?.errors?.['required']">Payment Method is required.</small>
+          </div>
+        </div>
+
+        <div class="form-group mb-2">
+          <label for="date" class="form-label">Date <span class="text-danger">*</span></label>
+          <input type="date" class="form-control" id="date" formControlName="date" [max]="maxDate"/>
+          <div *ngIf="formValue.get('date')?.invalid && formValue.get('date')?.touched" class="text-danger">
+            <small *ngIf="formValue.get('date')?.errors?.['required']">Date is required.</small>
+          </div>
+        </div>
+
+        <div class="mt-4 text-center mb-4">
+          <button type="submit" class="btn btn-success" [disabled]="formValue.invalid">Submit</button>
+        </div>
+
+      </form>
     </div>
   </div>
 
-  <h4 class="text-center" *ngIf="isExpense">Add new Expense transaction</h4>
-  <h4 class="text-center" *ngIf="!isExpense">Add new Income transaction</h4>
-
-  <div>
-    <form [formGroup]="formValue" (ngSubmit)="addTransaction()">
-
-      <div class="form-group mb-2">
-        <label for="amount" class="form-label">Amount</label>
-        <input type="number" class="form-control" id="amount" formControlName="amount" placeholder="Amount">
-      </div>
-
-      <div class="form-group mb-2">
-        <label for="category" class="form-label">Category</label>
-        <select class="form-select" id="category" formControlName="category">
-          <option value="" disabled selected>Select a category</option>
-          <option *ngFor="let category of categories" [value]="category">
-            {{ category }}
-          </option>
-        </select>
-      </div>
-
-      <div class="form-group mb-2">
-        <label for="paymentMethod" class="form-label">Payment Method</label>
-        <select class="form-select" id="paymentMethod" formControlName="paymentMethod">
-          <option value="" disabled selected>Select a Payment Method</option>
-          <option *ngFor="let paymentMethod of paymentMethodTypes" [value]="paymentMethod">
-            {{ paymentMethod }}
-          </option>
-        </select>
-      </div>
-
-      <div class="form-group mb-2">
-        <label for="date" class="form-label">Date</label>
-        <input type="date" class="form-control" id="date" formControlName="date" [max]="maxDate"/>
-      </div>
-
-      <button type="submit" class="btn btn-primary" [disabled]="formValue.invalid">Submit</button>
-
-    </form>
-  </div>
 
 </div>

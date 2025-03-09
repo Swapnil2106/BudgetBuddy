@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { TransactionModel } from '../transaction-component/transaction.model';
 import { CommonServiceService } from '../../shared/common-service.service';
+import { CommonModule } from '@angular/common';
 
 Chart.register(...registerables);
 @Component({
   selector: 'app-report-component',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './report-component.component.html',
   styleUrl: './report-component.component.css'
 })
@@ -24,6 +25,7 @@ export class ReportComponentComponent {
 
   ngOnInit() {
     this.transactions = this.commonService.transactionItems;
+    if(this.transactions.filter(transaction => transaction.type === 'expense'))
     this.processTransactionData('expense');
   }
 
@@ -36,6 +38,14 @@ export class ReportComponentComponent {
   }
 
   processTransactionData(transactionType: string) {
+
+    if(transactionType === 'expense'){
+      this.toggleType(true);
+    }
+    else{
+      this.toggleType(false);
+    }
+
     this.categoryData = {};
 
     // Filter transactions based on type (expense or income)

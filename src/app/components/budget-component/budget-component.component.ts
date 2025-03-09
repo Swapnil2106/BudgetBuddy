@@ -49,9 +49,13 @@ export class BudgetComponentComponent implements OnInit{
     const startDate = new Date(group.get('startDate')?.value);
     const endDate = new Date(group.get('endDate')?.value);
 
-    if (!startDate || !endDate) return null;
-
-    return startDate > endDate ? { invalidDateRange: true } : null;
+    if(startDate < endDate || startDate === endDate){
+      return null;
+    }
+    else{
+      const error = {dateRange: 'date range error'};
+      return error;
+    }
   }
 
   totalAmountSpentPerCategory(category: string){
@@ -106,6 +110,7 @@ export class BudgetComponentComponent implements OnInit{
   }
 
   updateBudgetDetails(){
+    if (this.formValue.valid) {
     this.budgetItemObj.name = this.formValue.value.name;
       this.budgetItemObj.amount = this.formValue.value.amount;
       this.budgetItemObj.category = this.formValue.value.category;
@@ -113,6 +118,9 @@ export class BudgetComponentComponent implements OnInit{
       this.budgetItemObj.endDate = this.formValue.value.endDate;
 
       this.commonService.updateBudget(this.budgetItemObj);
+    }else {
+      alert('Please fill in all fields correctly.');
+    }
   }
 
   deleteBudget(data: any) {

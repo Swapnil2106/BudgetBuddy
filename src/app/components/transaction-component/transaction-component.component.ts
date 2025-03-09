@@ -20,7 +20,13 @@ export class TransactionComponentComponent implements OnInit {
     this.initializeForm();
     this.setMaxDate();
     this.paymentMethodTypes = this.commonService.paymentMethodTypes;
-    this.categories = this.commonService.expenseCategories;
+    if(this.isExpense){
+      this.categories = this.commonService.expenseCategories;
+    }
+    else{
+      this.categories = this.commonService.incomeCategories;
+    }
+    this.filteredTransactions = [...this.transactionItems];
   }
 
   formValue !: FormGroup;
@@ -28,6 +34,10 @@ export class TransactionComponentComponent implements OnInit {
   paymentMethodTypes: string[] = [];
   maxDate: string = '';
   transactionItemObj: TransactionModel = new TransactionModel();
+  filteredTransactions: TransactionModel[] = [];
+  isExpense: boolean = true;
+
+  filterForm !: FormGroup;
 
   setMaxDate() {
       const today = new Date();
@@ -41,9 +51,23 @@ export class TransactionComponentComponent implements OnInit {
         paymentMethod: ['', Validators.required],
         date: ['', [Validators.required]],
       });
+
+      this.filterForm = this.formBuilder.group({
+        fromDate: [''],
+        toDate: [''],
+        category: [''],
+        amount: [''],
+        paymentMethod: ['']
+      });
     }
 
     editTransaction(transaction: TransactionModel) {
+      if(transaction.type === 'expense'){
+        this.categories = this.commonService.expenseCategories;
+      }
+      else{
+        this.categories = this.commonService.incomeCategories;
+      }
       if (!this.formValue) {
         console.error('Form is not initialized');
         return;
@@ -75,6 +99,33 @@ export class TransactionComponentComponent implements OnInit {
     if (confirm('Are you sure you want to delete this transaction?')) {
       this.commonService.deleteTransaction(data.id);
     }
+  }
+
+  applyFilter() {
+    const { fromDate, toDate, category, amount, paymentMethod } = this.filterForm.value;
+
+    // If no filters are applied, show all transactions
+    if (!fromDate && !toDate && !category && !amount && !paymentMethod) {
+      this.filteredTransactions = [...this.transactionItems];
+      return;
+    }
+
+    // Apply filters only when the button is clicked
+    this.filteredTransactions = this.transactionItems.filter(transaction => {
+      return (
+        (!fromDate || new Date(transaction.date) >= new Date(fromDate)) &&
+        (!toDate || new Date(transaction.date) <= new Date(toDate)) &&
+        (!category || transaction.category.toLowerCase().includes(category.toLowerCase())) &&
+        (!amount || transaction.amount === +amount) &&
+        (!paymentMethod || transaction.paymentMethod === paymentMethod)
+      );
+    });
+  }
+
+
+  resetFilter() {
+    this.filterForm.reset(); // Clear form
+    this.filteredTransactions = [...this.transactionItems]; // Restore original transactions
   }
 
 }
