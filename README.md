@@ -20,7 +20,7 @@ ng serve
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-##Website Look
+## Website Look
 ## 01: Overview / Home Page
 ![Overview](https://github.com/user-attachments/assets/99565581-5c14-41d0-ae14-9622d15c9479)
 
