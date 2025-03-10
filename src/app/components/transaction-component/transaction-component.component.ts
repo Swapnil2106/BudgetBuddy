@@ -27,6 +27,7 @@ export class TransactionComponentComponent implements OnInit {
       this.categories = this.commonService.incomeCategories;
     }
     this.filteredTransactions = [...this.transactionItems];
+    this.filterCategories = [...this.commonService.expenseCategories, ...this.commonService.incomeCategories];
   }
 
   formValue !: FormGroup;
@@ -35,6 +36,7 @@ export class TransactionComponentComponent implements OnInit {
   maxDate: string = '';
   transactionItemObj: TransactionModel = new TransactionModel();
   filteredTransactions: TransactionModel[] = [];
+  filterCategories: string[] = [];
   isExpense: boolean = true;
 
   filterForm !: FormGroup;
